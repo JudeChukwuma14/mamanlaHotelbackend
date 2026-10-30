@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f7f9fa;
+      margin: 0;
+      padding: 0;
+      color: #2d3748;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      max-width: 580px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      padding: 36px 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+    .brand-title {
+      font-size: 24px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+      color: #e2b774;
+    }
+    .brand-subtitle {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #cbd5e0;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .content {
+      padding: 40px 32px;
+      line-height: 1.6;
+    }
+    .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a202c;
+      margin-bottom: 12px;
+    }
+    .text {
+      font-size: 15px;
+      color: #4a5568;
+      margin-bottom: 24px;
+    }
+    .otp-container {
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 24px 16px;
+      text-align: center;
+      margin: 28px 0;
+    }
+    .otp-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .otp-code {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: 8px;
+      color: #0f172a;
+      font-family: 'Courier New', Courier, monospace;
+      user-select: all;
+    }
+    .expiry-note {
+      font-size: 13px;
+      color: #e11d48;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .security-notice {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 14px 16px;
+      border-radius: 4px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #92400e;
+    }
+    .footer {
+      background: #f8fafc;
+      padding: 24px 32px;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="brand-title">Mama La Hotel &amp; Co</div>
+      <div class="brand-subtitle">Sanctuary of Comfort &amp; Luxury</div>
+    </div>
+    <div class="content">
+      <div class="greeting">Hello,</div>
+      <div class="text"><%= message %></div>
+      <div class="otp-container">
+        <div class="otp-label">Your One-Time Verification Code</div>
+        <div class="otp-code"><%= otp %></div>
+        <div class="expiry-note">Valid for <%= expiresMinutes %> minutes</div>
+      </div>
+      <div class="security-notice">
+        <strong>Security Notice:</strong> Mama La Hotel &amp; Co staff will never ask for your verification code. If you did not initiate this request, please disregard this email or secure your account immediately.
+      </div>
+    </div>
+    <div class="footer">
+      &copy; <%= new Date().getFullYear() %> Mama La Hotel and Co. All rights reserved.<br>
+      This is an automated security notification. Please do not reply directly to this email.
+    </div>
+  </div>
+</body>
+</html>
+
