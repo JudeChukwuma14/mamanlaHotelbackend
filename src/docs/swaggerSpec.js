@@ -35,9 +35,17 @@ This API powers the luxury hospitality booking and management platform for **Mam
   },
   servers: [
     {
-      url: `http://localhost:${ENV.port}`,
-      description: "Local Development Server",
+      url: "https://mamanlahotelbackend.onrender.com",
+      description: "Live Production Server (Render)"
     },
+    {
+      url: `http://localhost:${ENV.port}`,
+      description: "Local Development Server"
+    },
+    {
+      url: "/",
+      description: "Current Host Relative"
+    }
   ],
   tags: [
     {

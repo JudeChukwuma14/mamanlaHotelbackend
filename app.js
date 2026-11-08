@@ -17,6 +17,9 @@ const { startExpiryCronJob } = require("./src/jobs/expirePendingBookings");
 
 const app = express();
 
+// Trust reverse proxy (essential for Render to correctly identify client IP and protocol)
+app.set("trust proxy", 1);
+
 // Security HTTP headers (disable CSP so Swagger UI can render external fonts/styles)
 app.use(
   helmet({
@@ -27,6 +30,7 @@ app.use(
 // CORS configuration supporting credentials (cookies)
 const allowedOrigins = [
   ENV.frontend_url,
+  "https://mamanlahotelbackend.onrender.com",
   "http://localhost:3000",
   "http://localhost:5173",
   "http://localhost:5174"
