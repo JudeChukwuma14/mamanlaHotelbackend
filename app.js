@@ -27,30 +27,30 @@ app.use(
   })
 );
 
-app.use(cors());
+// app.use(cors());
 // CORS configuration supporting credentials (cookies)
-// const allowedOrigins = [
-//   ENV.frontend_url,
-//   "https://mamanlahotelbackend.onrender.com",
-//   "http://localhost:3000",
-//   "http://localhost:5173",
-//   "http://localhost:5174"
-// ];
+const allowedOrigins = [
+  ENV.frontend_url,
+  "https://mamanlahotelbackend.onrender.com",
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://localhost:5174"
+];
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       // Allow requests with no origin (like mobile apps, curl, Postman, Swagger UI)
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         return callback(null, true);
-//       }
-//       return callback(new Error("CORS policy violation: origin not allowed"));
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"]
-//   })
-// );
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, Postman, Swagger UI)
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("CORS policy violation: origin not allowed"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
 
 // Cookie parser for HttpOnly refresh tokens
 app.use(cookieParser());
