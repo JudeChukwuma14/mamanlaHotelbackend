@@ -13,6 +13,18 @@ const ENV = {
     process.env.BREVO_SENDER_EMAIL ||
     "codarinstructor@gmail.com",
   brevo_sender_name: process.env.BREVO_SENDER_NAME || "Mama La Hotel and Co",
+  admin_notification_email:
+    process.env.ADMIN_NOTIFICATION_EMAIL ||
+    process.env.BREVO_EMAIL ||
+    "codarinstructor@gmail.com",
+
+  // Cloudinary
+  cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",
+  cloudinary_api_key: process.env.CLOUDINARY_API_KEY || "",
+  cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET || "",
+
+  // Booking Configuration
+  booking_expiry_minutes: parseInt(process.env.BOOKING_EXPIRY_MINUTES, 10) || 30,
 
   // JWT configuration
   jwt_access_secret:
@@ -37,7 +49,7 @@ const ENV = {
   cookie_secure:
     process.env.COOKIE_SECURE === "true" ||
     process.env.NODE_ENV === "production",
-  cookie_same_site: process.env.COOKIE_SAME_SITE || "lax",
+  cookie_same_site: process.env.COOKIE_SAME_SITE || "lax"
 };
 
 module.exports = ENV;

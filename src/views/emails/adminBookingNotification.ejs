@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - New Booking Notification</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f7f9fa;
+      margin: 0;
+      padding: 0;
+      color: #2d3748;
+    }
+    .wrapper {
+      max-width: 580px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      padding: 36px 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+    .brand-title {
+      font-size: 24px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+      color: #e2b774;
+    }
+    .brand-subtitle {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #cbd5e0;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .content {
+      padding: 40px 32px;
+      line-height: 1.6;
+    }
+    .alert-badge {
+      background: #fefce8;
+      border: 2px solid #fbbf24;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      margin: 16px 0 24px;
+    }
+    .alert-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #92400e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .alert-ref {
+      font-size: 24px;
+      font-weight: 800;
+      color: #78350f;
+      font-family: 'Courier New', monospace;
+      margin-top: 8px;
+      letter-spacing: 2px;
+    }
+    .details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .details-table td {
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+    .details-table td:first-child {
+      color: #64748b;
+      font-weight: 600;
+      width: 40%;
+    }
+    .details-table td:last-child {
+      color: #1e293b;
+      font-weight: 500;
+      text-align: right;
+    }
+    .footer {
+      background: #f8fafc;
+      padding: 24px 32px;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="brand-title">Mama La Hotel &amp; Co</div>
+      <div class="brand-subtitle">Staff &amp; Admin Notification</div>
+    </div>
+    <div class="content">
+      <p style="font-size:16px;font-weight:600;color:#1a202c;margin-top:0;">New Reservation Placed</p>
+      <p style="font-size:14px;color:#4a5568;">A guest has placed a new room reservation. Please review and assign room inventory as needed.</p>
+      
+      <div class="alert-badge">
+        <div class="alert-label">Booking Reference</div>
+        <div class="alert-ref"><%= bookingReference %></div>
+      </div>
+
+      <table class="details-table">
+        <tr><td>Guest Name</td><td><%= guestName %></td></tr>
+        <tr><td>Guest Email</td><td><%= guestEmail %></td></tr>
+        <tr><td>Room Category</td><td><%= roomName %></td></tr>
+        <tr><td>Check-in Date</td><td><%= checkIn %></td></tr>
+        <tr><td>Check-out Date</td><td><%= checkOut %></td></tr>
+        <tr><td>Rooms Requested</td><td><%= numberOfRooms %></td></tr>
+        <tr><td>Total Value</td><td>₦<%= Number(totalAmount).toLocaleString() %></td></tr>
+      </table>
+    </div>
+    <div class="footer">
+      &copy; <%= new Date().getFullYear() %> Mama La Hotel and Co. Internal Operations System.
+    </div>
+  </div>
+</body>
+</html>
+

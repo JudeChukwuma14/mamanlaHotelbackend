@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation Confirmation</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f7f9fa;
+      margin: 0;
+      padding: 0;
+      color: #2d3748;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrapper {
+      max-width: 580px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      padding: 36px 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+    .brand-title {
+      font-size: 24px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0;
+      color: #e2b774;
+    }
+    .brand-subtitle {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: #cbd5e0;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+    .content {
+      padding: 40px 32px;
+      line-height: 1.6;
+    }
+    .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a202c;
+      margin-bottom: 12px;
+    }
+    .text {
+      font-size: 15px;
+      color: #4a5568;
+      margin-bottom: 24px;
+    }
+    .confirmation-badge {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .confirmation-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #16a34a;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .booking-ref {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #15803d;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .details-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+    .details-table td {
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+    .details-table td:first-child {
+      color: #64748b;
+      font-weight: 600;
+      width: 45%;
+    }
+    .details-table td:last-child {
+      color: #1e293b;
+      font-weight: 500;
+      text-align: right;
+    }
+    .total-row td {
+      border-top: 2px solid #e2e8f0;
+      border-bottom: none;
+      font-size: 16px;
+      font-weight: 700;
+      padding-top: 16px;
+    }
+    .total-row td:last-child {
+      color: #e2b774;
+      font-size: 18px;
+    }
+    .security-notice {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 14px 16px;
+      border-radius: 4px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #1e40af;
+    }
+    .footer {
+      background: #f8fafc;
+      padding: 24px 32px;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="brand-title">Mama La Hotel &amp; Co</div>
+      <div class="brand-subtitle">Sanctuary of Comfort &amp; Luxury</div>
+    </div>
+    <div class="content">
+      <div class="greeting">Hello <%= guestName %>,</div>
+      <div class="text">Thank you for choosing Mama La Hotel &amp; Co. Your reservation has been recorded with details below:</div>
+      
+      <div class="confirmation-badge">
+        <div class="confirmation-label">Booking Reference</div>
+        <div class="booking-ref"><%= bookingReference %></div>
+      </div>
+
+      <table class="details-table">
+        <tr>
+          <td>Room Category</td>
+          <td><%= roomName %></td>
+        </tr>
+        <tr>
+          <td>Check-in Date</td>
+          <td><%= checkIn %></td>
+        </tr>
+        <tr>
+          <td>Check-out Date</td>
+          <td><%= checkOut %></td>
+        </tr>
+        <tr>
+          <td>Rooms Booked</td>
+          <td><%= numberOfRooms %></td>
+        </tr>
+        <tr>
+          <td>Total Nights</td>
+          <td><%= numberOfNights %></td>
+        </tr>
+        <tr class="total-row">
+          <td>Total Amount</td>
+          <td>₦<%= Number(totalAmount).toLocaleString() %></td>
+        </tr>
+      </table>
+
+      <div class="security-notice">
+        <strong>Important:</strong> Please present your booking reference upon arrival at check-in. If you need to make changes or have questions, contact our concierge desk.
+      </div>
+    </div>
+    <div class="footer">
+      &copy; <%= new Date().getFullYear() %> Mama La Hotel and Co. All rights reserved.<br>
+      This is an automated reservation notification. Please do not reply directly to this email.
+    </div>
+  </div>
+</body>
+</html>
+
