@@ -19,7 +19,7 @@ const getRefreshTokenCookieOptions = () => ({
 
 // 1. User Registration
 const register = async (req, res) => {
-  try {
+  try {  
     const { email, password, userName, phoneNumber } = req.body;
 
     const existingUser = await User.findOne({ email });
