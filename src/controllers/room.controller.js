@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const slugify = require("slugify");
 const Room = require("../models/room.model");
 const RoomInventory = require("../models/roomInventory.model");
@@ -570,13 +571,18 @@ const getPublicRooms = async (req, res) => {
   }
 };
 
-// 11. Public: Get Single Room Details by Slug
+// 11. Public: Get Single Room Details by Slug or ID
 const getRoomBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
     const { checkInDate, checkOutDate } = req.query;
 
-    const room = await Room.findOne({ slug, status: "active" });
+    const isObjectId = mongoose.Types.ObjectId.isValid(slug);
+    const query = isObjectId
+      ? { $or: [{ slug }, { _id: slug }], status: "active" }
+      : { slug, status: "active" };
+
+    const room = await Room.findOne(query);
     if (!room) {
       return res.status(404).json({
         success: false,
@@ -612,7 +618,7 @@ const getRoomBySlug = async (req, res) => {
   }
 };
 
-// 12. Public: Get Featured Rooms
+// 12. Public: Get Featured Rooms List
 const getFeaturedRooms = async (req, res) => {
   try {
     const featuredRooms = await Room.find({ status: "active", featured: true })
@@ -632,6 +638,104 @@ const getFeaturedRooms = async (req, res) => {
   }
 };
 
+// 13. Public: Get Single Featured Room Details by ID
+const getFeaturedRoomById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { checkInDate, checkOutDate } = req.query;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid room ID format."
+      });
+    }
+
+    const room = await Room.findOne({ _id: id, status: "active", featured: true });
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Featured room not found."
+      });
+    }
+
+    const roomObj = room.toObject();
+
+    if (checkInDate && checkOutDate) {
+      const parsedCheckIn = parseDate(checkInDate);
+      const parsedCheckOut = parseDate(checkOutDate);
+
+      if (parsedCheckIn && parsedCheckOut && isValidDateRange(parsedCheckIn, parsedCheckOut)) {
+        roomObj.availability = await getAvailableRoomCount(
+          room._id,
+          parsedCheckIn,
+          parsedCheckOut
+        );
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      room: roomObj
+    });
+  } catch (error) {
+    console.error("[GetFeaturedRoomById Error]:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to retrieve featured room details."
+    });
+  }
+};
+
+// 14. Public: Get Single Room Details by ID
+const getRoomById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { checkInDate, checkOutDate } = req.query;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid room ID format."
+      });
+    }
+
+    const room = await Room.findOne({ _id: id, status: "active" });
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Room not found."
+      });
+    }
+
+    const roomObj = room.toObject();
+
+    if (checkInDate && checkOutDate) {
+      const parsedCheckIn = parseDate(checkInDate);
+      const parsedCheckOut = parseDate(checkOutDate);
+
+      if (parsedCheckIn && parsedCheckOut && isValidDateRange(parsedCheckIn, parsedCheckOut)) {
+        roomObj.availability = await getAvailableRoomCount(
+          room._id,
+          parsedCheckIn,
+          parsedCheckOut
+        );
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      room: roomObj
+    });
+  } catch (error) {
+    console.error("[GetRoomById Error]:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to retrieve room details."
+    });
+  }
+};
+
 module.exports = {
   createRoom,
   updateRoom,
@@ -644,6 +748,8 @@ module.exports = {
   deleteRoomInventory,
   getPublicRooms,
   getRoomBySlug,
-  getFeaturedRooms
+  getFeaturedRooms,
+  getFeaturedRoomById,
+  getRoomById
 };
 

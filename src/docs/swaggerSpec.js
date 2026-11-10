@@ -847,6 +847,119 @@ This API powers the luxury hospitality booking and management platform for **Mam
       },
     },
 
+    "/api/v1/rooms/featured/{id}": {
+      get: {
+        tags: ["Public Rooms"],
+        summary: "Get single featured room details by ID",
+        description: `
+> 💡 **Frontend Developer Note:**  
+> - Use this endpoint to view a single featured room's full details by its MongoDB \`_id\`.
+> - Returns HTTP \`404\` if the room does not exist, is inactive, or is not marked as \`featured: true\`.
+> - Pass optional \`?checkInDate=YYYY-MM-DD&checkOutDate=YYYY-MM-DD\` in query parameters to include real-time availability calculations (\`totalCapacity\`, \`bookedCount\`, \`availableCount\`).
+        `,
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+            example: "66f1234567890abcdef12345",
+            description: "Room MongoDB ObjectId"
+          },
+          {
+            name: "checkInDate",
+            in: "query",
+            schema: { type: "string", format: "date" },
+            example: "2026-12-01"
+          },
+          {
+            name: "checkOutDate",
+            in: "query",
+            schema: { type: "string", format: "date" },
+            example: "2026-12-04"
+          }
+        ],
+        responses: {
+          200: {
+            description: "Featured room details with availability",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean", example: true },
+                    room: { $ref: "#/components/schemas/Room" }
+                  }
+                }
+              }
+            }
+          },
+          400: {
+            description: "Invalid room ID format"
+          },
+          404: {
+            description: "Featured room not found"
+          }
+        }
+      }
+    },
+
+    "/api/v1/rooms/id/{id}": {
+      get: {
+        tags: ["Public Rooms"],
+        summary: "Get single room details by ID",
+        description: `
+> 💡 **Frontend Developer Note:**  
+> - Use this endpoint to retrieve any active room category's details directly using its MongoDB \`_id\`.
+> - Pass optional \`?checkInDate=YYYY-MM-DD&checkOutDate=YYYY-MM-DD\` in query parameters to calculate real-time date availability.
+        `,
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+            example: "66f1234567890abcdef12345",
+            description: "Room MongoDB ObjectId"
+          },
+          {
+            name: "checkInDate",
+            in: "query",
+            schema: { type: "string", format: "date" },
+            example: "2026-12-01"
+          },
+          {
+            name: "checkOutDate",
+            in: "query",
+            schema: { type: "string", format: "date" },
+            example: "2026-12-04"
+          }
+        ],
+        responses: {
+          200: {
+            description: "Room details",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    success: { type: "boolean", example: true },
+                    room: { $ref: "#/components/schemas/Room" }
+                  }
+                }
+              }
+            }
+          },
+          400: {
+            description: "Invalid room ID format"
+          },
+          404: {
+            description: "Room category not found"
+          }
+        }
+      }
+    },
+
     "/api/v1/rooms": {
       get: {
         tags: ["Public Rooms"],
@@ -967,10 +1080,11 @@ This API powers the luxury hospitality booking and management platform for **Mam
     "/api/v1/rooms/{slug}": {
       get: {
         tags: ["Public Rooms"],
-        summary: "Get room details by slug",
+        summary: "Get room details by slug or ID",
         description: `
 > 💡 **Frontend Developer Note:**  
-> - Use this endpoint on the single room detail page (e.g. \`/rooms/:slug\`).
+> - Use this endpoint on the single room detail page (e.g. \`/rooms/:slug\` or \`/rooms/:id\`).
+> - Accepts **either** the room slug (e.g. \`deluxe-ocean-view-suite\`) or its MongoDB \`_id\`.
 > - Pass \`?checkInDate=YYYY-MM-DD&checkOutDate=YYYY-MM-DD\` in query params to instantly get calculated room availability for booking calendar selectors.
         `,
         parameters: [
@@ -980,6 +1094,7 @@ This API powers the luxury hospitality booking and management platform for **Mam
             required: true,
             schema: { type: "string" },
             example: "deluxe-ocean-view-suite",
+            description: "Room slug (e.g. deluxe-room) or MongoDB ObjectId"
           },
           {
             name: "checkInDate",
